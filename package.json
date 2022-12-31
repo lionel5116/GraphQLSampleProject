@@ -9,8 +9,12 @@
   "author": "Lionel Jones",
   "license": "ISC",
   "dependencies": {
+    "config": "^3.3.8",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "express-graphql": "^0.12.0",
-    "graphql": "^16.6.0"
+    "graphql": "^16.6.0",
+    "mongoose": "^6.8.2",
+    "request": "^2.88.2"
   }
 }

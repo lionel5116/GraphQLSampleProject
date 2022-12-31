@@ -3,6 +3,7 @@ const {GraphQLObjectType,
                 GraphQLSchema,
                 GraphQLInt,
                 GraphQLString,
+                GraphQLFloat,
                 GraphQLList} = graphql;
 
       
@@ -10,7 +11,14 @@ const {GraphQLObjectType,
 const userData = require("../MOCK_DATA.json");
 
 const UserType = require('./TypeDefs/UserType');
+const TravelType = require('./TypeDefs/TravelType');
+const Travel = require('../models/Travel');
 
+
+async function getTravelDetails() {
+    travelRecord = await Travel.find();
+    return travelRecord;
+}
 //CREATE QUERIE(S)
 //Remember GraphQL only has "one" entpoint, below is where you create your queries
 const RootQuery = new GraphQLObjectType( {
@@ -25,7 +33,16 @@ const RootQuery = new GraphQLObjectType( {
          resolve(parent,args) {
             return userData   //this is the MOCK_DATA.json data
          }
-       }
+       },
+       getAllTravelData:{ 
+        type: new GraphQLList(TravelType) , 
+        args:{id: {type: GraphQLString}},
+        
+        //the resolve function is where you would make your database call, i:e SELECT * .. or with MongoDB db.findByID (...)
+        resolve(parent,args) {
+           return getTravelDetails() ;   
+        }
+      },
        //If i wanted to create another query, it would be below here seperated by a , i:e getUserByID
     }
 });
